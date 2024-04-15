@@ -219,10 +219,10 @@ class ModelEvaluation:
         # Compute FPR, TPR, and thresholds
         fpr, tpr, thresholds = roc_curve(y_true = self.predictions['Actual'], y_score = self.predictions['Probability of Default'])
         # Compute AUC
-        roc_auc = auc(fpr,tpr)
+        auc,gini = self.compute_auc_gini()
         # Plot the ROC curve
         plt.figure()
-        plt.plot(fpr, tpr, label='ROC curve (AUC = %0.5f)' % roc_auc)
+        plt.plot(fpr, tpr, label=f'ROC curve (AUC = {auc:.5f}, GINI = {gini:.5f})')
         plt.plot([0, 1], [0, 1], 'r--')  # Plotting the diagonal line (random classifier)
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
